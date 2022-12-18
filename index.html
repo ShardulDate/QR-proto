@@ -1,0 +1,79 @@
+<html>
+
+<head>
+  <title>Front end</title>
+  <script>
+    function Function() {
+    }
+    var sampleData = {
+      "b22me101": {
+        name: "student1",
+        phone: "1",
+        branch: "mechanical"
+      },
+      "b22me102": {
+        name: "student2",
+        phone: "2",
+        branch: "electrical"
+      },
+      "b22me103": {
+        name: "student3",
+        phone: "3",
+        branch: "CS"
+      }
+    };
+    function dummyData(rollno) {
+      if (!Object.keys(sampleData).includes(rollno)) {
+        return null;
+      }
+      return sampleData[rollno];
+    }
+    function fetchData(rollno) {
+      return dummyData(rollno);
+      //return backend data
+    }
+    function getRollnofromURL() {
+      var params = location.search;
+      console.log(params)
+      var rollno = params.replace("?rollno=", "");
+      console.log(rollno)
+
+
+      return rollno;
+    }
+    function getData() {
+      var rollno = getRollnofromURL();
+      var fetchedData = fetchData(rollno);
+      return [rollno, fetchedData];
+    }
+    function displayData(rollno, data) {
+      if (data === null) {
+        var name = document.getElementById("name");
+        name.innerText = `no data found for id : ${rollno}`;
+
+      }
+      else {
+
+        var name = document.getElementById("name");
+        name.innerText = `name : ${data.name}`;
+        var phone = document.getElementById("phone");
+        phone.innerText = `phone : ${data.phone}`;
+        var branch = document.getElementById("branch");
+        branch.innerText = `branch : ${data.branch}`;
+      }
+    }
+    function inIt() {
+      var [rollno, data] = getData();
+      displayData(rollno, data);
+    }
+  </script>
+</head>
+
+<body onload="inIt()">
+  <h1>QR</h1>
+  <p id="name"></p>
+  <p id="phone"></p>
+  <p id="branch"></p>
+</body>
+
+</html>
